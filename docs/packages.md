@@ -1,0 +1,31 @@
+# Main packages my distro will have
+
+- bash (for POSIX comptibility)
+- fish
+- starship
+- fzf
+- zoxide
+- eza
+- yazi
+- btop
+- bat
+- impala
+- iwd
+- bluetui
+- pulsemixer
+- rg
+- lazyvim
+- niri
+- waybar
+- rofi-wayland
+- pulsemixer
+- ly
+- mako
+- base16/flavors
+- hyprlock
+- foot
+- wtfutils
+- hyprpolkitagent
+- wl-clipboard
+- imv
+- mpv
