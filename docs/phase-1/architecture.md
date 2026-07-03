@@ -30,7 +30,7 @@ The project has 5 core components:
 
 **Core Components**:
 
-- **Journal Registry**: An append-only registry that records successfully executed operations, kept both as an in-memory LIFO stack (for driving rollback within the current run) and appended incrementally to a durable journal file on disk (`/tmp/nirioly/journal-<timestamp>.jsonl`), so a completed step is never lost even if the process crashes before finishing. Note: the current requirements only call for rollback *within* the same run after a failure — the on-disk journal gives you a forensic record after a crash, not automatic resume-and-rollback on the next invocation. That would be a separate feature if you want it later.
+- **Journal Registry**: An append-only registry that records successfully executed operations, kept both as an in-memory LIFO stack (for driving rollback within the current run) and appended incrementally to a durable journal file on disk (`/tmp/nirioly/journal-<timestamp>.jsonl`), so a completed step is never lost even if the process crashes before finishing. Note: the current requirements only call for rollback *within* the same run after a failure — the on-disk journal gives you a forensic record after a crash, not automatic resume-and-rollback on the next invocation.
 
 - **Transaction Interface**: A strict structure requirement where any operation must natively possess two methods: a forward execution instruction and a corresponding reverse rollback instruction.
 
