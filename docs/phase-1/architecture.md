@@ -72,46 +72,45 @@ graph TD
     classDef output fill:#234e52,stroke:#319795,stroke-width:2px,color:#fff;
 
     %% Module Structure
-    subgraph M_Config [1. Configuration Module]
+    subgraph M_Config [Configuration Module]
         A[Application Entrypoint] --> B[Configuration Loader]
         B -->|Embeds static assets| C[Package Blueprint & Dotfiles Payload]
         B -->|Resolves credentials| D[Administrative Secrets]
     end
 
-    subgraph M_Sys [2. System Introspection Module]
+    subgraph M_Sys [System Introspection Module]
         E[Hardware Detector] -->|Queries GPU Vendor Metadata| F[System Profile]
     end
 
-    subgraph M_Tx [3. First-Class Transaction Module]
-        G[Transaction Manager] -->|Coordinates LIFO Stack| H[Journal Registry]
-        G -->|Enforces Structural Contract| I[Transaction Interface]
+    subgraph M_Tx [Transaction Module]
+        G[Transaction Manager] <-->|Coordinates LIFO Stack| H[Journal Registry]
+        G -->|Triggers Next Operation| I[Transaction Interface]
+        G -.->|Triggers Rollback Operation| I
         I -->|Implementation| J[Add User Command]
         I -->|Implementation| K[Package Provision Command]
         I -->|Implementation| L[Dotfile Link Command]
     end
 
-    subgraph M_Exec [4. System Execution Module]
+    subgraph M_Exec [System Execution Module]
         M[Command Runner] -->|Invokes Operating System Hooks| N[OS Subshell Processes]
     end
 
-    subgraph M_UI [5. Telemetry & Presentation Module]
+    subgraph M_UI [Telemetry & Presentation Module]
         O[Telemetry Hub] -->|Aggregates Streams| P[Persistent File Log]
         O -->|Renders Real-Time UI| Q[Terminal Interface Progress & Emojis]
     end
 
     %% Lifecycle Logic & Data Flow Connections
     B & F -->|Assembles Master Execution Plan| G
-    H -->|1. Triggers Next Operation| I
-    I -->|2. Directs Subshell Actions| M
+    I -->|Directs Subshell Actions| M
     
     %% Output telemetry streams out passively
-    M -->|3. Pipes Raw Streams & Progress Ticks| O
+    M -->|Pipes Raw Streams & Progress Ticks| O
     
     %% Success/Failure Pivots return to the engine core
-    M -->|4. Returns Execution Outcome| I
-    I -->|5a. If Success -> Commits Action| H
-    I -->|5b. If Failure -> Initiates Recovery| H
-    H -.->|6. Drains Log in Reverse Order| I
+    M -->|Returns Execution Outcome| I
+    I -->|Success/Failure| G
+    H -.->|Drains Log in Reverse Order| G
 
     %% Apply Classes
     class A,B,C,D config;
@@ -131,5 +130,4 @@ flowchart TD
     C -->|No| E[Trigger Rollback State]
     D --> F[Process Next Transaction]
     E --> G[Drain Journal Backward]
-
 ```
