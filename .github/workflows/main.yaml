@@ -2,16 +2,26 @@ name: CI
 
 on:
   push:
-    branches: "main"
+    branches:
+      - main
+
+# Ensure subsequent pushes don't overlap releases
+concurrency:
+  group: production-release
+  cancel-in-progress: false
 
 jobs:
-  build:
-    name: Compile Project
+  build-and-release:
+    name: Check, Test, Build, and Release
     runs-on: ubuntu-26.04
-
+    permissions:
+      contents: write # needed for pushing tags and creating releases
+    
     steps:
       - name: Checkout code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # fetches entire history so cog can calculate version changes
 
       - name: Install Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -22,8 +32,27 @@ jobs:
       - name: Cargo Build
         run: cargo build --release --verbose
 
+      - name: Cargo Test
+        run: cargo test --verbose
+
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: nirioly-linux-amd64
           path: target/release/nirioly
+
+      - name: Cocogitto Auto Bump
+        id: cog_bump
+        uses: cocogitto/cocogitto-action@v3
+        with:
+          release: true
+          git-user: 'github-actions[bot]'
+          git-user-email: '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Create GitHub Release
+        if: steps.cog_bump.outputs.version != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.cog_bump.outputs.version }}
+          files: target/release/nirioly
+          body_path: CHANGELOG.md
