@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.2.0](https://github.com/FilippoGurioli/FilippoGurioli/nirioly/compare/97b667589911b078069567f9428cdac894c28838..0.2.0) - 2026-07-06
+#### Features
+- split into binary + lib project - ([c282202](https://github.com/FilippoGurioli/FilippoGurioli/nirioly/commit/c28220252fc1c8605103ec2c6ae0443cdba1dd99)) - rioly
+#### Continuous Integration
+- update action to not release if cocogitto didn't triggered - ([7dcdbe7](https://github.com/FilippoGurioli/FilippoGurioli/nirioly/commit/7dcdbe7115ac1f8e8c82e94a09dfbb4958d0793f)) - rioly
+- update action to not release if cocogitto didn't triggered - ([dd16c60](https://github.com/FilippoGurioli/FilippoGurioli/nirioly/commit/dd16c60f92b34ce7cfb4e9e4548227c30ff02f71)) - rioly
+- adhere to the new cocogitto/cocogitto-action version standards - ([8a26b2b](https://github.com/FilippoGurioli/FilippoGurioli/nirioly/commit/8a26b2bf75e5b13ad6ed0864a80036ae69c2d770)) - rioly
+- update action versions - ([97b6675](https://github.com/FilippoGurioli/FilippoGurioli/nirioly/commit/97b667589911b078069567f9428cdac894c28838)) - rioly
+
+- - -
+
 ## [0.1.0](https://github.com/FilippoGurioli/FilippoGurioli/nirioly/compare/62b49026069e336f78da5c44de603b32a90a3a27..0.1.0) - 2026-07-06
 #### Build system
 - update git push post bump in cocogitto config - ([4b0bd10](https://github.com/FilippoGurioli/FilippoGurioli/nirioly/commit/4b0bd10011f9244079779408a5e7a47d5be521aa)) - rioly
