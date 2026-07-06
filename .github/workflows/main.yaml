@@ -40,12 +40,6 @@ jobs:
       - name: Cargo Test
         run: cargo test --verbose
 
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: nirioly-linux-amd64
-          path: target/release/nirioly
-
       - name: Cocogitto Auto Bump
         id: cog_bump
         uses: cocogitto/cocogitto-action@v4
@@ -54,6 +48,13 @@ jobs:
           args: --auto --skip-ci
           git-user: 'github-actions[bot]'
           git-user-email: '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Upload Build Artifact
+        if: steps.cog_bump.outputs.version != ''
+        uses: actions/upload-artifact@v7
+        with:
+          name: nirioly-linux-amd64
+          path: target/release/nirioly
 
       - name: Create GitHub Release
         if: steps.cog_bump.outputs.version != ''
