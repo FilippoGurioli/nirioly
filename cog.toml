@@ -18,6 +18,7 @@ post_package_bump_hooks = []
 script = """#!/bin/sh
 set -e
 cog verify --file $1
+cog check
 cargo fmt -v --all --check
 cargo clippy
 """
@@ -26,6 +27,12 @@ cargo clippy
 
 [changelog]
 path = "CHANGELOG.md"
-authors = []
+template = "remote"
+remote = "github.com"
+repository = "FilippoGurioli/nirioly"
+owner = "FilippoGurioli"
+authors = [
+  { username = "FilippoGurioli", signature = "Filippo Gurioli" }
+]
 
 [bump_profiles]
