@@ -40,6 +40,11 @@ jobs:
       - name: Cargo Test
         run: cargo test --verbose
 
+      - name: Get Current Version
+        id: pre_version
+        run: |
+          echo "current=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].version')" >> $GITHUB_OUTPUT
+
       - name: Cocogitto Auto Bump
         id: cog_bump
         uses: cocogitto/cocogitto-action@v4
@@ -50,14 +55,14 @@ jobs:
           git-user-email: '41898282+github-actions[bot]@users.noreply.github.com'
 
       - name: Upload Build Artifact
-        if: steps.cog_bump.outputs.version != ''
+        if: steps.cog_bump.outputs.version != steps.pre_version.outputs.current
         uses: actions/upload-artifact@v7
         with:
           name: nirioly-linux-amd64
           path: target/release/nirioly
 
       - name: Create GitHub Release
-        if: steps.cog_bump.outputs.version != ''
+        if: steps.cog_bump.outputs.version != steps.pre_version.outputs.current
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ steps.cog_bump.outputs.version }}
