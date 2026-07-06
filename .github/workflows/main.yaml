@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: "main"
+
+jobs:
+  build:
+    name: Compile Project
+    runs-on: ubuntu-26.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cargo Check
+        run: cargo check --verbose
+
+      - name: Cargo Build
+        run: cargo build --release --verbose
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nirioly-linux-amd64
+          path: target/release/nirioly
