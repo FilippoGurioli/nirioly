@@ -50,7 +50,8 @@ jobs:
         id: cog_bump
         uses: cocogitto/cocogitto-action@v4
         with:
-          release: true
+          command: bump
+          args: --auto --skip-ci
           git-user: 'github-actions[bot]'
           git-user-email: '41898282+github-actions[bot]@users.noreply.github.com'
 
