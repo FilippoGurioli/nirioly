@@ -1,5 +1,8 @@
 [package]
 name = "nirioly"
+license = "MIT"
+description = "A binary to be launched the second after the Arch ISO has boot. The output should be my complete custom environment."
+repository = "https://github.com/FilippoGurioli/nirioly"
 version = "0.2.0"
 edition = "2024"
 
