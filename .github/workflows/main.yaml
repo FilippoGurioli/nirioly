@@ -40,6 +40,11 @@ jobs:
       - name: Cargo Test
         run: cargo test --verbose
 
+      - name: Check SemVer Backwards Compatibility
+        uses: obi1kenobi/cargo-semver-checks-action@v2
+        with:
+          baseline-rev: main
+
       - name: Get Current Version
         id: pre_version
         run: |
